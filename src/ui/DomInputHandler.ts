@@ -38,8 +38,9 @@ export class DomInputHandler {
             this.renderer.render(this.game.state);
             this.renderer.updateWinCounts(this.game.wins);
 
-            // Auto-switch turn if 0 rolled
-            if (this.game.state.lastRoll === 0 && !this.game.state.waitingForRoll) {
+            // Auto-switch turn if 0 rolled OR if no valid moves available
+            const noValidMoves = this.game.state.possibleMoves.length === 0 && !this.game.state.waitingForRoll;
+            if (noValidMoves) {
                 setTimeout(() => {
                     this.game.switchTurn();
                     this.renderer.render(this.game.state);
